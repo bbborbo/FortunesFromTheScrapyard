@@ -50,6 +50,7 @@ namespace FortunesFromTheScrapyard.Equipment
 
         public override void Hooks()
         {
+            CreateEquipment();
             speedBuff = Content.CreateAndAddBuff("EnergyBarSpeed", null, Color.yellow, true, false);
 
             GetStatCoefficients += EnergyBarSpeedBuff;
