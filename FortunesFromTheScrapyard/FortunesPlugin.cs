@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Security;
 using System.Security.Permissions;
 using BepInEx;
+using FortunesFromTheScrapyard.Equipment;
 using FortunesFromTheScrapyard.Items;
 using FortunesFromTheScrapyard.Modules;
 using FortunesFromTheScrapyard.Skills;
@@ -73,6 +74,9 @@ namespace FortunesFromTheScrapyard
 
             BeginInitializing<ItemBase>(allTypes);
             Modules.Language.TryPrintOutput("FortunesItems.txt");
+
+            BeginInitializing<EquipmentBase>(allTypes);
+            Modules.Language.TryPrintOutput("FortunesEquipment.txt");
 
             //RalseiSurvivor.instance.InitializeCharacterMaster();
 
