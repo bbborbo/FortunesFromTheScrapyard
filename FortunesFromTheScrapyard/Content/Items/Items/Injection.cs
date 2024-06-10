@@ -68,6 +68,7 @@ namespace FortunesFromTheScrapyard.Items
                 if (injectionCount > 0 && NetworkServer.active)
                 {
                     int injectionStacks = (int)(GetStackValue(toxinDurationBase, toxinDurationStack, injectionCount) * damageInfo.procCoefficient);
+                    //Debug.Log(injectionStacks);
                     InjectionBehavior injection = victim.GetComponent<InjectionBehavior>();
                     if (injection == null)
                         injection = victim.AddComponent<InjectionBehavior>();
@@ -101,10 +102,10 @@ namespace FortunesFromTheScrapyard.Items
         {
             if(hostBody != null && NetworkServer.active)
             {
-                if (stacksRemaining >= 0)
+                if (stacksRemaining > 0)
                 {
                     stopwatch += Time.fixedDeltaTime;
-                    while (stopwatch > interval)
+                    if(stopwatch > interval)
                     {
                         //create effect
                         hostBody.AddBuff(RoR2Content.Buffs.PermanentCurse);

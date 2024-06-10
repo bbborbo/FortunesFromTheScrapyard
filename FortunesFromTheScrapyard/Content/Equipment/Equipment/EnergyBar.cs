@@ -17,8 +17,8 @@ namespace FortunesFromTheScrapyard.Equipment
         #region config
         [AutoConfig("Cooldown", 12f)]
         public static float cooldown = 12f;
-        [AutoConfig("Speed Bonus", 0.5f)]
-        public static float speedBonus = 0.5f;
+        [AutoConfig("Speed Bonus", 0.3f)]
+        public static float speedBonus = 0.3f;
         [AutoConfig("Speed Bonus Duration", 5f)]
         public static float speedBonusDuration = 5f;
         public override string ConfigName => "Equipment : " + EquipmentName;
