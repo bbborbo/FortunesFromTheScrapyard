@@ -31,7 +31,7 @@ namespace FortunesFromTheScrapyard.Items
         public override string ItemPickupDesc => "High damage hits also inflict a deadly toxin.";
 
         public override string ItemFullDescription => $"Hits that deal {DamageColor("more than 400% damage")} also inflict a toxin " +
-            $"that {HealthColor("permanently reduces maximum health")} by 1% every {toxinInterval} seconds. " +
+            $"that {HealthColor("permanently")} reduces maximum health by {DamageColor("1%")} every {toxinInterval} seconds. " +
             $"Toxin lasts for {UtilityColor((toxinDurationBase * toxinInterval).ToString())} seconds " +
             $"{StackText("+" + (toxinDurationStack * toxinInterval).ToString())}.";
 
