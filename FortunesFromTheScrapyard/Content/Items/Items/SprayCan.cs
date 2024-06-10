@@ -36,7 +36,7 @@ namespace FortunesFromTheScrapyard.Items
 
         public override string ItemLangTokenName => "SPRAYCAN";
 
-        public override string ItemPickupDesc => "Chance to inflict poison. Prioritized when used with 3D Printers.";
+        public override string ItemPickupDesc => "Chance to inflict poison on hit. Prioritized when used with 3D Printers.";
 
         public override string ItemFullDescription => $"{DamageColor(baseChance.ToString() + "%")} {StackText("+ " + stackChance.ToString()) + "%"} " +
             $"chance to {DamageColor("poison")} an enemy for {DamageColor(ConvertDecimal(poisonTotalDamage))} TOTAL damage. Prioritized when used with 3D Printers.";
