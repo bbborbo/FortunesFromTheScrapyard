@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using static R2API.RecalculateStatsAPI;
+using static FortunesFromTheScrapyard.Modules.Language.Styling;
 
 namespace FortunesFromTheScrapyard.Equipment
 {
@@ -28,7 +29,9 @@ namespace FortunesFromTheScrapyard.Equipment
 
         public override string EquipmentPickupDesc => "Reset all other cooldowns, then gain a brief speed boost.";
 
-        public override string EquipmentFullDescription => "";
+        public override string EquipmentFullDescription => $"Reset all {UtilityColor("ability cooldowns")}, then " +
+            $"increase {UtilityColor("movement speed")} by {UtilityColor(ConvertDecimal(speedBonus))} " +
+            $"for {UtilityColor(speedBonusDuration.ToString())} seconds.";
 
         public override string EquipmentLore => "";
 
