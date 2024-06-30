@@ -21,8 +21,8 @@ namespace FortunesFromTheScrapyard.Items
         public static int stackChance = 7;
         [AutoConfig("Poison Damage Coefficient Total", 2)]
         public static float poisonTotalDamage = 2;
-        [AutoConfig("Poison Damage Coefficient Tick", 0.33f)]
-        public static float poisonTickDamage = 0.33f;
+        [AutoConfig("Poison Damage Coefficient Tick", 0.1f)]
+        public static float poisonTickDamage = 0.1f;
         [AutoConfig("Poison Tick Rate", 0.1f)]
         public static float poisonTickRate = 0.1f;
         public override string ConfigName => "Item : " + ItemName;

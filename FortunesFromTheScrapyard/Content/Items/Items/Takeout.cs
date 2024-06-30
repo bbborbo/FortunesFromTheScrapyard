@@ -14,20 +14,20 @@ namespace FortunesFromTheScrapyard.Items
 {
     class Takeout : ItemBase<Takeout>
     {
-        [AutoConfig("Base Damage Bonus", 0.3f)]
-        public static float damageBase = 0.3f;
-        [AutoConfig("Stacking Damage Bonus", 0.2f)]
-        public static float damageStack = 0.2f;
+        [AutoConfig("Base Damage Bonus", 0.25f)]
+        public static float damageBase = 0.25f;
+        [AutoConfig("Stacking Damage Bonus", 0.25f)]
+        public static float damageStack = 0.25f;
 
-        [AutoConfig("Base Movement Speed Bonus", 0.3f)]
-        public static float mspdBase = 0.3f;
-        [AutoConfig("Stacking Movement Speed Bonus", 0.2f)]
-        public static float mspdStack = 0.2f;
+        [AutoConfig("Base Movement Speed Bonus", 0.25f)]
+        public static float mspdBase = 0.25f;
+        [AutoConfig("Stacking Movement Speed Bonus", 0.25f)]
+        public static float mspdStack = 0.25f;
 
-        [AutoConfig("Base Regen Bonus", 2.5f)]
-        public static float regenBase = 2.5f;
-        [AutoConfig("Stacking Regen Bonus", 1.5f)]
-        public static float regenStack = 1.5f;
+        [AutoConfig("Base Regen Bonus", 3f)]
+        public static float regenBase = 3f;
+        [AutoConfig("Stacking Regen Bonus", 3f)]
+        public static float regenStack = 3f;
 
         public static BuffDef takeoutDamageBuff;
         public static BuffDef takeoutMspdBuff;
@@ -47,7 +47,7 @@ namespace FortunesFromTheScrapyard.Items
             $"until the stage ends. " +
             $"Can increase base damage by {DamageColor(ConvertDecimal(damageBase))} {StackText("+" + ConvertDecimal(damageStack))}, " +
             $"movement speed by {UtilityColor(ConvertDecimal(mspdBase))} {StackText("+" + ConvertDecimal(mspdStack))}, " +
-            $"or base health regeneration by {HealingColor(regenBase.ToString() + " per second")} {StackText("+" + regenStack.ToString())}";
+            $"or base health regeneration by {HealingColor(regenBase.ToString() + " hp/s")} {StackText("+" + regenStack.ToString() + " hp/s")}";
 
         public override string ItemLore => "";
 

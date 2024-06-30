@@ -13,14 +13,14 @@ namespace FortunesFromTheScrapyard.Items
     class CounterfeitCurrency : ItemBase<CounterfeitCurrency>
     {
         #region config
-        [AutoConfig("Free Money Base", 40)]
-        public static int freeMoneyBase = 40;
-        [AutoConfig("Free Money Stack", 40)]
-        public static int freeMoneyStack = 40;
-        [AutoConfig("Income Penalty Base", 0.2f)]
-        public static float incomePenaltyBase = 0.2f;
-        [AutoConfig("Income Penalty Stack", 0.2f)]
-        public static float incomePenaltyStack = 0.2f;
+        [AutoConfig("Free Money Base", 50)]
+        public static int freeMoneyBase = 50;
+        [AutoConfig("Free Money Stack", 50)]
+        public static int freeMoneyStack = 50;
+        [AutoConfig("Income Penalty Base", 0.25f)]
+        public static float incomePenaltyBase = 0.25f;
+        [AutoConfig("Income Penalty Stack", 0.25f)]
+        public static float incomePenaltyStack = 0.25f;
 
         public override string ConfigName => "Item : " + ItemName;
         #endregion
@@ -67,7 +67,7 @@ namespace FortunesFromTheScrapyard.Items
             {
                 float freeMoney = GetStackValue(freeMoneyBase, freeMoneyStack, itemCount);
                 float freeMoneyCompensated = freeMoney / CalculateIncomeModifier(itemCount);
-                self.GiveMoney((uint)freeMoneyCompensated);
+                self.GiveMoney((uint)Run.instance.GetDifficultyScaledCost((int)freeMoneyCompensated, Run.instance.difficultyCoefficient));
             }
             orig(self, body);
         }
@@ -80,8 +80,8 @@ namespace FortunesFromTheScrapyard.Items
                 if (master)
                 {
                     float freeMoney = GetStackValue(freeMoneyBase, freeMoneyStack, count);
-                    float freeMoneyCompensated = freeMoney / CalculateIncomeModifier(GetCount(master) + count);
-                    master.GiveMoney((uint)freeMoneyCompensated);
+                    float freeMoneyCompensated = freeMoney / CalculateIncomeModifier(GetCount(master));
+                    master.GiveMoney((uint)Run.instance.GetDifficultyScaledCost((int)freeMoneyCompensated, Stage.instance.entryDifficultyCoefficient));
                 }
             }
         }
@@ -106,6 +106,7 @@ namespace FortunesFromTheScrapyard.Items
             {
                 incomeModifier *= (1 - incomePenaltyBase);
                 incomeModifier *= Mathf.Pow(1 - incomePenaltyStack, itemCount - 1);
+                Debug.Log(incomeModifier);
             }
             return incomeModifier;
         }
