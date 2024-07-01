@@ -22,8 +22,8 @@ namespace FortunesFromTheScrapyard.Items
         public static float chanceBase = 17f;
         [AutoConfig("Proc Chance Stack", 10f)]
         public static float chanceStack = 10f;
-        [AutoConfig("Disorient Duration", 5f)]
-        public static float disorientDuration = 5f;
+        [AutoConfig("Disorient Duration", 2f)]
+        public static float disorientDuration = 2f;
         [AutoConfig("Disorient Damage Increase", 0.2f)]
         public static float disorientDamage = 0.2f;
         #endregion
