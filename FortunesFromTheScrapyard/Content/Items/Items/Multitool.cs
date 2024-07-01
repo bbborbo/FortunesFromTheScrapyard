@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
+using static FortunesFromTheScrapyard.Modules.Language.Styling;
 
 namespace FortunesFromTheScrapyard.Items
 {
@@ -23,6 +24,8 @@ namespace FortunesFromTheScrapyard.Items
         public static bool shrineMountain = true;
         [AutoConfig("Chance Shrines", true)]
         public static bool shrineChance = true;
+        [AutoConfig("Combat Shrines", false)]
+        public static bool shrineCombat = false;
         [AutoConfig("Terminals", "Includes printers and shops.", true)]
         public static bool terminals = true;
         [AutoConfig("Chests", "Includes chests and scavenger bags.", true)]
@@ -37,7 +40,7 @@ namespace FortunesFromTheScrapyard.Items
 
         public override string ItemPickupDesc => "The next interactable triggers an additional time. Regenerates every stage.";
 
-        public override string ItemFullDescription => "";
+        public override string ItemFullDescription => "Hack the next interactable to trigger ";
 
         public override string ItemLore => "";
 
@@ -73,6 +76,33 @@ namespace FortunesFromTheScrapyard.Items
                 On.RoR2.ShrineBloodBehavior.AddShrineStack += MultitoolBlood;
             if (shrineChance)
                 IL.RoR2.ShrineChanceBehavior.AddShrineStack += MultitoolChance;
+            if (shrineCombat)
+                IL.RoR2.ShrineCombatBehavior.AddShrineStack += MultitoolCombat;
+        }
+
+        private void MultitoolCombat(ILContext il)
+        {
+            ILCursor c = new ILCursor(il);
+
+            c.GotoNext(MoveType.After,
+                x => x.MatchCallOrCallvirt<ShrineCombatBehavior>("get_monsterCredit")
+                );
+            c.Emit(OpCodes.Ldarg_0);
+            c.EmitDelegate<Func<float, ShrineCombatBehavior, float>>((monsterCredit, self) =>
+            {
+                bool multitoolSuccess = false;
+                MultitoolComponent mtc = null;
+                if (self.TryGetComponent(out mtc))
+                {
+                    if (mtc.VerifyMultitoolAndBreak())
+                    {
+                        multitoolSuccess = true;
+
+                        return monsterCredit * 2;
+                    }
+                }
+                return monsterCredit;
+            });
         }
 
         private void MultitoolTerminal(On.RoR2.ShopTerminalBehavior.orig_DropPickup orig, ShopTerminalBehavior self)
