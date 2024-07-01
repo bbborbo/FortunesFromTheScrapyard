@@ -1,4 +1,5 @@
 ﻿using BepInEx.Configuration;
+using FortunesFromTheScrapyard.Modules;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using R2API;
@@ -15,13 +16,26 @@ namespace FortunesFromTheScrapyard.Items
     {
         #region config
         public override string ConfigName => "Multitool";
+
+        [AutoConfig("Blood Shrines", true)]
+        public static bool shrineBlood = true;
+        [AutoConfig("Mountain Shrines", true)]
+        public static bool shrineMountain = true;
+        [AutoConfig("Chance Shrines", true)]
+        public static bool shrineChance = true;
+        [AutoConfig("Terminals", "Includes printers and shops.", true)]
+        public static bool terminals = true;
+        [AutoConfig("Chests", "Includes chests and scavenger bags.", true)]
+        public static bool chests = true;
+        [AutoConfig("Roulette Chests", true)]
+        public static bool roulette = true;
         #endregion
 
-        public override string ItemName => "Multitool";
+        public override string ItemName => "Multi-tool";
 
         public override string ItemLangTokenName => "MULTITOOL";
 
-        public override string ItemPickupDesc => "The next interactable triggers twice. Regenerates every stage.";
+        public override string ItemPickupDesc => "The next interactable triggers an additional time. Regenerates every stage.";
 
         public override string ItemFullDescription => "";
 
@@ -47,12 +61,18 @@ namespace FortunesFromTheScrapyard.Items
             CreateItem();
             On.RoR2.PurchaseInteraction.OnInteractionBegin += MultitoolInteract;
 
-            On.RoR2.ShopTerminalBehavior.DropPickup += MultitoolTerminal;
-            On.RoR2.ChestBehavior.ItemDrop += MultitoolChest;
-            On.RoR2.RouletteChestController.EjectPickupServer += MultitoolRoulette;
-            On.RoR2.ShrineBossBehavior.AddShrineStack += MultitoolMountain;
-            On.RoR2.ShrineBloodBehavior.AddShrineStack += MultitoolBlood;
-            IL.RoR2.ShrineChanceBehavior.AddShrineStack += MultitoolChance;
+            if (terminals)
+                On.RoR2.ShopTerminalBehavior.DropPickup += MultitoolTerminal;
+            if (chests)
+                On.RoR2.ChestBehavior.ItemDrop += MultitoolChest;
+            if (roulette)
+                On.RoR2.RouletteChestController.EjectPickupServer += MultitoolRoulette;
+            if (shrineMountain)
+                On.RoR2.ShrineBossBehavior.AddShrineStack += MultitoolMountain;
+            if (shrineBlood)
+                On.RoR2.ShrineBloodBehavior.AddShrineStack += MultitoolBlood;
+            if (shrineChance)
+                IL.RoR2.ShrineChanceBehavior.AddShrineStack += MultitoolChance;
         }
 
         private void MultitoolTerminal(On.RoR2.ShopTerminalBehavior.orig_DropPickup orig, ShopTerminalBehavior self)
