@@ -60,7 +60,7 @@ namespace FortunesFromTheScrapyard.Items
             GetHitBehavior += InjectionOnHit;
         }
 
-        private void InjectionOnHit(CharacterBody attackerBody, DamageInfo damageInfo, GameObject victim)
+        private void InjectionOnHit(CharacterBody attackerBody, DamageInfo damageInfo, CharacterBody victimBody)
         {
             if(damageInfo.damage / attackerBody.damage >= 4)
             {
@@ -69,9 +69,10 @@ namespace FortunesFromTheScrapyard.Items
                 {
                     int injectionStacks = (int)(GetStackValue(toxinDurationBase, toxinDurationStack, injectionCount) * damageInfo.procCoefficient);
                     //Debug.Log(injectionStacks);
-                    InjectionBehavior injection = victim.GetComponent<InjectionBehavior>();
+                    InjectionBehavior injection = victimBody.GetComponent<InjectionBehavior>();
                     if (injection == null)
-                        injection = victim.AddComponent<InjectionBehavior>();
+                        injection = victimBody.gameObject.AddComponent<InjectionBehavior>();
+                    injection.hostBody = victimBody;
                     injection.AddStacks(injectionStacks);
                 }
             }
@@ -85,13 +86,14 @@ namespace FortunesFromTheScrapyard.Items
 
     public class InjectionBehavior : MonoBehaviour
     {
-        CharacterBody hostBody;
+        internal CharacterBody hostBody;
         float interval => Injection.toxinInterval;
         float stopwatch = 0;
         int stacksRemaining = 0;
         public void Start()
         {
-            hostBody = GetComponent<CharacterBody>();
+            if(hostBody == null)
+                hostBody = GetComponent<CharacterBody>();
         }
         public void AddStacks(int stacksToAdd)
         {

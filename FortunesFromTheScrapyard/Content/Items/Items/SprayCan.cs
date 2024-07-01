@@ -79,7 +79,7 @@ namespace FortunesFromTheScrapyard.Items
             });
         }
 
-        private void SprayCanHit(CharacterBody attackerBody, DamageInfo damageInfo, GameObject victim)
+        private void SprayCanHit(CharacterBody attackerBody, DamageInfo damageInfo, CharacterBody victimBody)
         {
             int sprayCount = GetCount(attackerBody);
             if(sprayCount > 0)
@@ -101,7 +101,7 @@ namespace FortunesFromTheScrapyard.Items
                     InflictDotInfo inflictDotInfo = new InflictDotInfo
                     {
                         attackerObject = damageInfo.attacker,
-                        victimObject = victim,
+                        victimObject = victimBody.gameObject,
                         totalDamage = new float?(damageInfo.damage * poisonTotalDamage),
                         damageMultiplier = 1f,
                         dotIndex = poisonDotIndex,
